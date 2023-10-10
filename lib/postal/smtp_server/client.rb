@@ -427,15 +427,15 @@ module Postal
             message.save
 
           when :bounce
-            if rp_route = server.routes.where(:name => "__returnpath__").first
+            #if rp_route = server.routes.where(:name => "__returnpath__").first
               # If there's a return path route, we can use this to create the message
-              rp_route.create_messages do |message|
-                message.rcpt_to = rcpt_to
-                message.mail_from = @mail_from
-                message.raw_message = @data
-                message.received_with_ssl = @tls
-              end
-            else
+              #rp_route.create_messages do |message|
+                #message.rcpt_to = rcpt_to
+                #message.mail_from = @mail_from
+                #message.raw_message = @data
+                #message.received_with_ssl = @tls
+              #end
+            #else
               # There's no return path route, we just need to insert the mesage
               # without going through the route.
               message = server.message_db.new_message
@@ -446,7 +446,7 @@ module Postal
               message.scope = 'incoming'
               message.bounce = 1
               message.save
-            end
+            #end
           when :route
             options[:route].create_messages do |message|
               message.rcpt_to = rcpt_to
